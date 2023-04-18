@@ -5,10 +5,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import pro.sky.hwstream.Employee;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,10 +66,9 @@ public class EmployeeService {
                 .orElseThrow(() -> new IllegalArgumentException());
     }
 
-    public List<Employee> printDepEmployees() {
+    public Map<Integer, List<Employee>> printAllEmployees() {
         return employees.stream()
-                .sorted(Comparator.comparing(Employee::getDepartment))
-                .collect(Collectors.toList());
+                .collect(Collectors.groupingBy(Employee::getDepartment));
     }
 
     public List<Employee> printAllEmployeesForDep(int dep) {

@@ -7,6 +7,7 @@ import pro.sky.hwstream.Employee;
 import pro.sky.hwstream.service.EmployeeService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class EmployeeController {
@@ -46,11 +47,14 @@ public class EmployeeController {
         return employeeService.findEmployeeWithMinSalaryFromDepartment(department);
     }
 
-    @RequestMapping("/departments/all")
-    public List<Employee> printAllEmployeesForDep(@RequestParam(value = "departmentId", required = false) Integer dep) {
-        if (dep == null) {
-            return employeeService.printDepEmployees();
-        }
+    @RequestMapping(value = "/departments/all", params = "departmentId")
+    public List<Employee> printAllEmployeesForDep(@RequestParam("departmentId") int dep) {
         return employeeService.printAllEmployeesForDep(dep);
+    }
+
+    @RequestMapping("/departments/all")
+    public Map<Integer, List<Employee>> printAllEmployees() {
+        return employeeService.printAllEmployees();
+
     }
 }
